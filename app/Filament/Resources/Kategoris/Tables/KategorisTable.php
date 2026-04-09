@@ -14,7 +14,16 @@ class KategorisTable
     {
         return $table
             ->columns([
-                TextColumn::make('nama')->label('Nama Kategori')
+                TextColumn::make('nama')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

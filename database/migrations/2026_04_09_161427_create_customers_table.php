@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_kategori', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('nomer_wa');
+            $table->float('rating', 2)->default(3);
+            $table->foreignId('cabang_id')->constrained('cabangs')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategoris');
+        Schema::dropIfExists('customers');
     }
 };

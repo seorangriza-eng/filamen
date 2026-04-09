@@ -2,22 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Produk extends Model
 {
-    protected $table = 'tb_produks';
-
-    protected $guarded = [
-        'id'
+    protected $fillable = [
+        'nama',
+        'harga',
+        'kategori_id',
+        'deadline',
+        'spesial_treatment'
     ];
 
-    protected $casts = [
-        'spesial_treatment' => 'boolean'
-    ];
-
-    public function kategori(){
+    public function kategori():BelongsTo{
         return $this->belongsTo(Kategori::class);
     }
 }

@@ -18,6 +18,8 @@ class CabangsTable
                     ->searchable(),
                 TextColumn::make('alamat')
                     ->searchable(),
+                TextColumn::make('nomer_wa')
+                    ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

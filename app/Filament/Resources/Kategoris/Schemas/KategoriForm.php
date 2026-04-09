@@ -3,6 +3,9 @@
 namespace App\Filament\Resources\Kategoris\Schemas;
 
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class KategoriForm
@@ -11,7 +14,11 @@ class KategoriForm
     {
         return $schema
             ->components([
-                TextInput::make('nama')->required()
+                Section::make('Kategori Produk')
+                    ->schema([
+                        TextInput::make('nama')
+                        ->required()
+                    ])->columnSpanFull(),
             ]);
     }
 }

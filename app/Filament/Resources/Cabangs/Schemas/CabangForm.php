@@ -15,6 +15,8 @@ class CabangForm
                     ->required(),
                 TextInput::make('alamat')
                     ->required(),
+                TextInput::make('nomer_wa')
+                    ->required(),
             ]);
     }
 }

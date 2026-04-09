@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Kategoris;
 use App\Filament\Resources\Kategoris\Pages\CreateKategori;
 use App\Filament\Resources\Kategoris\Pages\EditKategori;
 use App\Filament\Resources\Kategoris\Pages\ListKategoris;
+use App\Filament\Resources\Kategoris\RelationManagers\ProdukRelationManager;
 use App\Filament\Resources\Kategoris\Schemas\KategoriForm;
 use App\Filament\Resources\Kategoris\Tables\KategorisTable;
 use App\Models\Kategori;
@@ -13,12 +14,17 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class KategoriResource extends Resource
 {
     protected static ?string $model = Kategori::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string | UnitEnum | null $navigationGroup = 'Produk';
+
+    protected static ?string $navigationLabel = 'Kategori Produk';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBeaker;
 
     protected static ?string $recordTitleAttribute = 'nama';
 
@@ -35,7 +41,7 @@ class KategoriResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            ProdukRelationManager::class
         ];
     }
 

@@ -3,18 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cabang extends Model
 {
-    protected $table = 'tb_cabang';
-
     protected $fillable = [
         'nama',
-        'alamat'
+        'alamat',
+        'nomer_wa'
     ];
 
-    public function customer(){
+    public function customer():HasMany{
         return $this->hasMany(Customer::class);
     }
-
 }

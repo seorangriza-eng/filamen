@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Customer extends Model
 {
-    protected $table = 'tb_customers';
-
     protected $fillable = [
         'nama',
         'nomer_wa',
@@ -15,11 +14,11 @@ class Customer extends Model
         'cabang_id'
     ];
 
-    protected $cast = [
-        'rating' => "float"
+    protected $casts = [
+        'rating' => 'float'
     ];
 
-    public function cabang(){
+    public function cabang():BelongsTo{
         return $this->belongsTo(Cabang::class);
-    }    
+    }
 }

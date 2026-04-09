@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Customers\Tables;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -14,15 +15,26 @@ class CustomersTable
     {
         return $table
             ->columns([
-                TextColumn::make('nama'),
-                TextColumn::make('nomer_wa')->label('Nomer Whatsapp'),
-                TextColumn::make('rating'),
-                TextColumn::make('cabang.nama')->label('Cabang')
+                TextColumn::make('nama')
+                    ->searchable(),
+                TextColumn::make('nomer_wa')
+                    ->searchable(),
+                TextColumn::make('rating')
+                    ->numeric(),
+                TextColumn::make('cabang.nama')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
+                ViewAction::make(),
                 EditAction::make(),
             ])
             ->toolbarActions([

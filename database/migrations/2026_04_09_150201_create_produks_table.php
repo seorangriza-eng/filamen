@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tb_customers', function (Blueprint $table) {
+        Schema::create('produks', function (Blueprint $table) {
             $table->id();
-            $table->string("nama");
-            $table->string("nomer_wa");
-            $table->float("rating", 2);
-            $table->string("cabang_id");
+            $table->string('nama');
+            $table->integer('harga');
+            $table->foreignId('kategori_id')->constrained('kategoris')->cascadeOnDelete();
+            $table->integer('deadline')->nullable();
+            $table->boolean('spesial_treatment');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('produks');
     }
 };
