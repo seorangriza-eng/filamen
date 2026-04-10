@@ -62,8 +62,6 @@ class AdminPanelProvider extends PanelProvider
                 'Customer',
                 'Cabang'
             ])
-            ->topNavigation();
-            // ->collapsibleNavigationGroups(false)
-            // ->sidebarFullyCollapsibleOnDesktop();
+            ->collapsibleNavigationGroups(false);
     }
 }

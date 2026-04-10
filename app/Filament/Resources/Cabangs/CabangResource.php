@@ -17,8 +17,6 @@ class CabangResource extends Resource
 {
     protected static ?string $model = Cabang::class;
 
-    protected static string | UnitEnum | null $navigationGroup = 'Cabang';
-
     protected static ?string $navigationLabel = 'Cabang';
 
     protected static ?string $recordTitleAttribute = 'nama';

@@ -16,4 +16,9 @@ class Cabang extends Model
     public function customer():HasMany{
         return $this->hasMany(Customer::class);
     }
+
+    public function transaksi():HasMany{
+        return $this->hasMany(Transaksi::class);
+    }
+
 }
