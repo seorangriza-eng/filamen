@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId("customer_id")->constrained('customers');
             $table->foreignId("cabang_id")->constrained('cabangs');
             $table->integer("total");
-            $table->date('deadline');
+            $table->enum('progress', ['diterima','selesai','komplit']);
+            $table->integer('deadline');
             $table->boolean('spesial_treatment');
             $table->timestamps();
         });

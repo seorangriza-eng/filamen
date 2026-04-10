@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Transaksis\Pages;
 
 use App\Filament\Resources\Transaksis\TransaksiResource;
+use App\Models\Transaksi;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateTransaksi extends CreateRecord
@@ -12,9 +13,16 @@ class CreateTransaksi extends CreateRecord
     //hapus data dari 'details' utama seelum insert ke tabel transaksi
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        $details = $data['details'] ?? [];
-        unset($data['details']);    
+        // 1. Logika Pembuatan Nomor Invoice
+        $today = now()->format('dmy');
+        $countToday = Transaksi::whereDate('created_at', today())->count();
+        $sequence = $countToday + 1;
     
+        // Simpan ke array $data
+        $data['invoie'] = "INV-{$today}{$sequence}";
+
+        // $details = $data['details'] ?? [];
+        unset($data['details']);    
         return $data;
     } 
 
@@ -23,11 +31,9 @@ class CreateTransaksi extends CreateRecord
         $details = $this->data['details'] ??[];
         foreach ($details as $detail){
             $this->record->details()->create([
-                // 'transaksi_id' => '1',
-                'produk_id' => $detail['produk_id'],
+                'produk' => $detail['produk'],
                 'quantity' => $detail['quantity'],
                 'harga' => $detail['harga'],
-                'total_belanja' => $detail['total_belanja']
             ]);
         }
     }

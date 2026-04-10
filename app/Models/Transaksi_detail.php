@@ -9,16 +9,15 @@ class Transaksi_detail extends Model
 {
     protected $fillable = [
         'transaksi_id',
-        'produk_id',
+        'produk',
         'quantity',
-        'harga',
-        'total_belanja'        
+        'harga',     
     ];
 
     protected $casts = [
+        'produk' => 'string',
         'quantity' => 'integer',
-        'harga' => 'integer',
-        'total_belanja' => 'integer'
+        'harga' => 'integer'
     ];
 
     protected function transaksi():BelongsTo{

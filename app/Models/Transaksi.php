@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProgressTransaksi;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,12 +14,13 @@ class Transaksi extends Model
         'customer_id',
         'cabang_id',
         'total',
+        'progress',
         'deadline',
         'spesial_treatment'
     ];
 
     protected $casts = [
-        'deadline' => 'date',
+        'progress' => ProgressTransaksi::class,
         'spesial_treatment' => 'boolean'
     ];
 
@@ -33,5 +35,4 @@ class Transaksi extends Model
     public function cabang():BelongsTo{
         return $this->belongsTo(Cabang::class);
     }
-
 }

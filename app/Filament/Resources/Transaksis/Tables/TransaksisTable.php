@@ -29,7 +29,6 @@ class TransaksisTable
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('deadline')
-                    ->date()
                     ->sortable(),
                 IconColumn::make('spesial_treatment')
                     ->boolean(),
