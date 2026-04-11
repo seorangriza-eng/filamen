@@ -13,6 +13,7 @@ class Transaksi extends Model
         'invoie',
         'customer_id',
         'cabang_id',
+        'user_id',
         'total',
         'progress',
         'deadline',
@@ -34,5 +35,9 @@ class Transaksi extends Model
 
     public function cabang():BelongsTo{
         return $this->belongsTo(Cabang::class);
+    }
+
+    public function user():BelongsTo{
+        return $this->belongsTo(User::class);
     }
 }

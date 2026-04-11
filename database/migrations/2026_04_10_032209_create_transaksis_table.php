@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string("invoie")->unique();
             $table->foreignId("customer_id")->constrained('customers');
             $table->foreignId("cabang_id")->constrained('cabangs');
+            $table->foreignId("user_id")->constrained('users');
             $table->integer("total");
             $table->enum('progress', ['diterima','selesai','komplit']);
             $table->integer('deadline');

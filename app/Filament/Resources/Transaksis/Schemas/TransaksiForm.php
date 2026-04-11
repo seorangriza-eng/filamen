@@ -6,19 +6,23 @@ use App\Enums\ProgressTransaksi;
 use App\Filament\Tables\PilihCustomer;
 use App\Models\Customer;
 use App\Models\Produk;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\ModalTableSelect;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiForm
 {
@@ -26,10 +30,14 @@ class TransaksiForm
     {
         return $schema
             ->components([
+                // dd(auth()->user()),
                 Section::make('Customer')
                     ->schema([
                         Hidden::make('invoie')
                             ->dehydrated(),
+                        Hidden::make('user_id')
+                            ->default(fn () => auth()->user()?->id
+                            ),
                         // Select::make('customer_id')->label('Nama Customer')
                         //     ->relationship('customer', 'nama')
                         //     ->createOptionForm([
@@ -52,11 +60,17 @@ class TransaksiForm
                                         $set('cabang_id', $cabangid->cabang_id);
                                     }
                                 })
-                            ->getOptionLabelFromRecordUsing(fn (Customer $record): string => "{$record->nama} ({$record->nomer_wa})"),
+                            ->getOptionLabelFromRecordUsing(fn (Customer $record): 
+                                string => "{$record->nama} ({$record->nomer_wa})"),
                         // Select::make('cabang_id')
                         //     ->label('Cabang')
                         //     ->relationship('cabang', 'nama')
                         //     ->required(),
+                        Actions::make([
+                            Action::make('Tambah Customer')
+                                ->label('+ Tambah')
+                                ->icon('heroicon-o-user-plus')
+                        ]),
                         Hidden::make('cabang_id')->live()->dehydrated(),
                         TextInput::make('deadline')
                             ->numeric()
