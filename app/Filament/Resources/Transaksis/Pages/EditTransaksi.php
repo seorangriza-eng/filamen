@@ -21,7 +21,7 @@ class EditTransaksi extends EditRecord
         return $data;
     }
 
-    //hapus data dari 'details' utama seelum insert ke tabel transaksi
+    //hapus data dari 'details' utama sebelum insert ke tabel transaksi
     protected function mutateFormDataBeforeSave(array $data): array
     {
         // $details = $data['details'] ?? [];

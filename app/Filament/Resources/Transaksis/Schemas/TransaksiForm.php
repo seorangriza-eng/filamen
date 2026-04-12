@@ -107,7 +107,8 @@ class TransaksiForm
                                 ->numeric()
                                 ->disabled()
                                 ->live(debounce:500)
-                                ->numeric(),
+                                ->numeric()
+                                ->prefix('IDR'),
                             TextInput::make('quantity')
                                 ->numeric()
                                 ->required()
@@ -120,6 +121,7 @@ class TransaksiForm
                             TextInput::make('total_belanja')
                                 ->label('Total')
                                 ->numeric()
+                                ->prefix('IDR')
                                 ->disabled()
                                 ->dehydrated()
                         ])->columns(4)

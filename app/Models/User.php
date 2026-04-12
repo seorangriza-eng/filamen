@@ -33,4 +33,7 @@ class User extends Authenticatable
     public function transaksi():HasMany{
         return $this->hasMany(Transaksi::class);
     }
+    public function jurnal():HasMany{
+        return $this->hasMany(Jurnal::class);
+    }
 }
