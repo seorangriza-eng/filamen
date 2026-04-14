@@ -59,6 +59,7 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->navigationGroups([
+                'Keuangan',
                 'Produk',
                 'Customer',
                 'Cabang'

@@ -24,7 +24,8 @@ class JurnalForm
                 ->schema([
                     Select::make('coa_1Id')
                             ->label("Akun Transaksi")
-                            ->options(Coa::pluck("nama", 'id'))
+                            ->options(Coa::where('is_active', true)
+                                ->pluck("nama", 'id'))
                             ->required(),
                     TextInput::make('keterangan')
                         ->required(),  
@@ -47,7 +48,8 @@ class JurnalForm
                     ->schema([                                                  
                         Select::make('coa_2Id')
                             ->label("Keluar Ke / Masuk Dari")
-                            ->options(Coa::pluck("nama", 'id'))
+                            ->options(Coa::where('is_active', true)
+                                ->pluck("nama", 'id'))
                             ->required(),
                         TextInput::make('ref')
                         ->required(),                     
