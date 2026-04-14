@@ -4,14 +4,13 @@ namespace App\Filament\Resources\Transaksis\Schemas;
 
 use App\Enums\ProgressTransaksi;
 use App\Filament\Tables\PilihCustomer;
+use App\Filament\Tables\TransaksiProduk;
 use App\Models\Customer;
 use App\Models\Produk;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\ModalTableSelect;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -22,7 +21,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
-use Illuminate\Support\Facades\Auth;
+use Filament\Tables\Filters\QueryBuilder;
 
 class TransaksiForm
 {
@@ -33,7 +32,7 @@ class TransaksiForm
                 // dd(auth()->user()),
                 Section::make('Customer')
                     ->schema([
-                        Hidden::make('invoie')
+                        Hidden::make('invoice')
                             ->dehydrated(),
                         Hidden::make('user_id')
                             ->default(fn () => auth()->user()?->id
@@ -74,10 +73,11 @@ class TransaksiForm
                         Hidden::make('cabang_id')->live()->dehydrated(),
                         TextInput::make('deadline')
                             ->numeric()
+                            ->readOnly()
                             ->required(),
                         ToggleButtons::make('Progress')
                             ->options(ProgressTransaksi::class)
-                            ->inline(),
+                            ->inline()->default('diterima'),
                         Checkbox::make('spesial_treatment')
                             ->inline(),
                     ])->columns(3)->columnSpanFull(),                
@@ -90,23 +90,41 @@ class TransaksiForm
                         Repeater::make('details')
                         ->label('Produk')
                         ->schema([
-                            Select::make('produk_id')
-                                ->label('Produk')
-                                ->options(Produk::pluck('nama', 'id'))
-                                ->required()
+                            // Select::make('produk_id')
+                            //     ->label('Produk')
+                            //     ->options(Produk::pluck('nama', 'id'))
+                            //     ->required()
+                            //     ->live()
+                            //     ->afterStateUpdated(function($state, Set $set){
+                            //         if ($produk = Produk::find($state)){
+                            //             $set('produk', $produk->nama);
+                            //             $set('harga', $produk->harga);
+                            //             }
+                            //         }),
+                            ModalTableSelect::make('produk_id')
+                                ->label('Produk / Jasa')
+                                ->relationship("produk", "nama")
+                                ->tableConfiguration(TransaksiProduk::class)
                                 ->live()
-                                ->afterStateUpdated(function($state, Set $set){
+                                ->afterStateUpdated(function ($state, Set $set){
                                     $produk = Produk::find($state);
                                     if ($produk){
                                         $set('produk', $produk->nama);
                                         $set('harga', $produk->harga);
+                                        if($produk->deadline > 0){
+                                            $set('../../deadline', $produk->deadline);
+                                        }
+                                        if($produk->spesial_treatment = true){
+                                                $set('../../spesial_treatment', $produk->spesial_treatment);
+                                        }
                                     }
-                                }),
+                                })
+                                ->required(),
                             Hidden::make('produk'),
                             TextInput::make('harga')
                                 ->numeric()
                                 ->disabled()
-                                ->live(debounce:500)
+                                ->live()
                                 ->numeric()
                                 ->prefix('IDR'),
                             TextInput::make('quantity')
@@ -130,10 +148,19 @@ class TransaksiForm
                 Section::make('Pembayaran')
                     ->schema([
                         TextInput::make('total')
-                        ->label('Subtotal Belanja')
-                        ->numeric()
-                        ->readOnly()
-                ])->columnSpanFull()
+                            ->label('Subtotal Belanja')
+                            ->numeric()
+                            ->readOnly(),
+                        ToggleButtons::make('metode_bayar')
+                            ->label('Metode Pembayaran')
+                            ->options([
+                                "tunai" => "Tunai",
+                                "qris" => "Qris",
+                                "transfer" => "Transfer",
+                                "piutang" => "Piutang",
+                            ])
+                            ->inline()
+                ])->columnSpanFull()->columns(2)
         ]);
     }
 

@@ -26,4 +26,8 @@ class Customer extends Model
     public function transaksi():HasMany{
         return $this->hasMany(Transaksi::class);
     }
+
+    public function bayar():HasMany{
+        return $this->hasMany(Transaksi_pembayaran::class);
+    }
 }

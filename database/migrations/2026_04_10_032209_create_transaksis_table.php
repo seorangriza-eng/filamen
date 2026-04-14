@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->string("invoie")->unique();
+            $table->string("invoice")->unique();
             $table->foreignId("customer_id")->constrained('customers');
             $table->foreignId("cabang_id")->constrained('cabangs');
             $table->foreignId("user_id")->constrained('users');
-            $table->integer("total");
             $table->enum('progress', ['diterima','selesai','komplit']);
             $table->integer('deadline');
             $table->boolean('spesial_treatment');
+            $table->integer("total");
+            $table->boolean("is_lunas");
             $table->timestamps();
         });
     }

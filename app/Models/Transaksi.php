@@ -10,19 +10,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Transaksi extends Model
 {
     protected $fillable = [
-        'invoie',
+        'invoice',
         'customer_id',
         'cabang_id',
         'user_id',
         'total',
         'progress',
         'deadline',
-        'spesial_treatment'
+        'spesial_treatment',
+        'is_lunas'
     ];
 
     protected $casts = [
         'progress' => ProgressTransaksi::class,
-        'spesial_treatment' => 'boolean'
+        'spesial_treatment' => 'boolean',
+        'is_lunas' => 'boolean'
     ];
 
     public function details():HasMany{
@@ -39,5 +41,13 @@ class Transaksi extends Model
 
     public function user():BelongsTo{
         return $this->belongsTo(User::class);
+    }
+
+    public function produk():BelongsTo{
+        return $this->belongsTo(Produk::class);
+    }
+
+    public function bayar():HasMany{
+        return $this->hasMany(Transaksi_pembayaran::class);
     }
 }

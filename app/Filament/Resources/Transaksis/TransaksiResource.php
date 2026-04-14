@@ -11,6 +11,7 @@ use App\Filament\Resources\Transaksis\Schemas\TransaksiInfolist;
 use App\Filament\Resources\Transaksis\Tables\TransaksisTable;
 use App\Models\Transaksi;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -22,7 +23,10 @@ class TransaksiResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
+    protected static string|UnitEnum|null $navigationGroup = "Penjualan";
+
     protected static ?string $recordTitleAttribute = 'invoice';
+    
 
     public static function form(Schema $schema): Schema
     {

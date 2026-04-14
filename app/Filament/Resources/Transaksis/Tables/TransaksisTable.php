@@ -16,7 +16,7 @@ class TransaksisTable
     {
         return $table
             ->columns([
-                TextColumn::make('invoie')
+                TextColumn::make('invoice')
                     ->label('Nomer Invoice')
                     ->searchable(),
                 TextColumn::make('customer.nama')
@@ -25,12 +25,14 @@ class TransaksisTable
                 TextColumn::make('cabang.nama')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('total')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('deadline')
                     ->sortable(),
                 IconColumn::make('spesial_treatment')
+                    ->boolean(),
+                TextColumn::make('total')
+                    ->numeric(),
+                IconColumn::make('is_lunas')
+                    ->label('Lunas?')
                     ->boolean(),
                 TextColumn::make('created_at')
                     ->dateTime()

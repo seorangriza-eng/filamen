@@ -19,7 +19,7 @@ class CreateTransaksi extends CreateRecord
         $sequence = $countToday + 1;
     
         // Simpan ke array $data
-        $data['invoie'] = "INV-{$today}{$sequence}";
+        $data['invoice'] = "INV-{$today}{$sequence}";
 
         // $details = $data['details'] ?? [];
         unset($data['details']);    
