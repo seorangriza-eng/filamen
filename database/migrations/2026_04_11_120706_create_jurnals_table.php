@@ -17,8 +17,10 @@ return new class extends Migration
             $table->integer('nominal');
             $table->date('trx_date');
             $table->foreignId('cabang_id')->constrained('cabangs');
-            $table->string('ref');
             $table->foreignId('user_id')->constrained('users');
+            $table->string('ref');
+            $table->string('ref_type');
+            $table->foreignId('ref_id')->constrained('transaksis')->cascadeOnDelete();
             $table->timestamps();
         });
     }

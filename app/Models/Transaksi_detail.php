@@ -7,12 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Transaksi_detail extends Model
 {
-    protected $fillable = [
-        'transaksi_id',
-        'produk',
-        'quantity',
-        'harga',     
-    ];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'produk' => 'string',

@@ -75,7 +75,7 @@ class TransaksiForm
                             ->numeric()
                             ->readOnly()
                             ->required(),
-                        ToggleButtons::make('Progress')
+                        ToggleButtons::make('progress')
                             ->options(ProgressTransaksi::class)
                             ->inline()->default('diterima'),
                         Checkbox::make('spesial_treatment')
@@ -103,6 +103,7 @@ class TransaksiForm
                             //         }),
                             ModalTableSelect::make('pilih_produk')
                                 ->label('Produk / Jasa')
+                                ->dehydrated(false)
                                 ->tableConfiguration(TransaksiProduk::class)
                                 ->getOptionLabelUsing(fn ($value) => Produk::find($value)?->nama ?? '-')
                                 ->afterStateUpdated(function ($state, Set $set){
@@ -160,15 +161,21 @@ class TransaksiForm
                                 "piutang" => "Piutang",
                             ])
                             ->live()
-                            ->afterStateUpdated(function ($state, Set $set){
+                            ->afterStateUpdated(function ($state, Get $get, Set $set){
                                 if ($state == 'piutang'){
                                     $lunas = false;
+                                    $set('jumlah_bayar', 0);
                                 } else {
                                     $lunas = true;
+                                    $total = $get('total');
+                                    $set('jumlah_bayar', $total);
                                 }
                                 $set('is_lunas', $lunas);
                             })
                             ->inline(),
+                        TextInput::make('jumlah_bayar')
+                            ->readOnly()
+                            ->dehydrated(),
                         Checkbox::make('is_lunas')->default(false)->dehydrated(),
                 ])->columnSpanFull()->columns(2)
         ]);

@@ -67,7 +67,6 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->pages([
                 BukuBesar::class
-            ])
-            ->collapsibleNavigationGroups(false);
+            ])->sidebarFullyCollapsibleOnDesktop(true);
     }
 }

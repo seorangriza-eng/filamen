@@ -9,17 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Transaksi extends Model
 {
-    protected $fillable = [
-        'invoice',
-        'customer_id',
-        'cabang_id',
-        'user_id',
-        'total',
-        'progress',
-        'deadline',
-        'spesial_treatment',
-        'is_lunas'
-    ];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'progress' => ProgressTransaksi::class,
