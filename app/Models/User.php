@@ -36,4 +36,7 @@ class User extends Authenticatable
     public function jurnal():HasMany{
         return $this->hasMany(Jurnal::class);
     }
+    public function bayar():HasMany{
+        return $this->hasMany(Transaksi_pembayaran::class);
+    }
 }

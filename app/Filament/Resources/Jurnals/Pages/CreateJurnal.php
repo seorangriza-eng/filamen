@@ -24,7 +24,7 @@ class CreateJurnal extends CreateRecord
 
     }
 
-    //simpan data didatabase jurnal_details
+    //simpan data didatabase jurnal_details ya
     protected function afterCreate() : void {
         $data = $this->form->getState();
 

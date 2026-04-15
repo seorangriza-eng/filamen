@@ -101,24 +101,24 @@ class TransaksiForm
                             //             $set('harga', $produk->harga);
                             //             }
                             //         }),
-                            ModalTableSelect::make('produk_id')
+                            ModalTableSelect::make('pilih_produk')
                                 ->label('Produk / Jasa')
-                                ->relationship("produk", "nama")
                                 ->tableConfiguration(TransaksiProduk::class)
-                                ->live()
+                                ->getOptionLabelUsing(fn ($value) => Produk::find($value)?->nama ?? '-')
                                 ->afterStateUpdated(function ($state, Set $set){
                                     $produk = Produk::find($state);
                                     if ($produk){
                                         $set('produk', $produk->nama);
                                         $set('harga', $produk->harga);
-                                        if($produk->deadline > 0){
+                                        if($produk->deadline >= 0){
                                             $set('../../deadline', $produk->deadline);
                                         }
-                                        if($produk->spesial_treatment = true){
+                                        if($produk->spesial_treatment == true){
                                                 $set('../../spesial_treatment', $produk->spesial_treatment);
                                         }
                                     }
                                 })
+                                ->live()
                                 ->required(),
                             Hidden::make('produk'),
                             TextInput::make('harga')
@@ -159,7 +159,17 @@ class TransaksiForm
                                 "transfer" => "Transfer",
                                 "piutang" => "Piutang",
                             ])
-                            ->inline()
+                            ->live()
+                            ->afterStateUpdated(function ($state, Set $set){
+                                if ($state == 'piutang'){
+                                    $lunas = false;
+                                } else {
+                                    $lunas = true;
+                                }
+                                $set('is_lunas', $lunas);
+                            })
+                            ->inline(),
+                        Checkbox::make('is_lunas')->default(false)->dehydrated(),
                 ])->columnSpanFull()->columns(2)
         ]);
     }

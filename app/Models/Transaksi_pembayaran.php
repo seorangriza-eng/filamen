@@ -12,11 +12,12 @@ class Transaksi_pembayaran extends Model
         'transaksi_id',
         'user_id',
         'jumlah_bayar',
+        'is_lunas',
         'metode'
     ];
 
     protected $casts = [
-        'jumlah_bayar' => 'numeric',
+        'jumlah_bayar' => 'integer',
     ];
 
     public function transaksi(): BelongsTo {
@@ -25,6 +26,10 @@ class Transaksi_pembayaran extends Model
 
     public function customer(): BelongsTo {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class);
     }
 
 }

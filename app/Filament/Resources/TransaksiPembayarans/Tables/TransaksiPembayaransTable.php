@@ -16,18 +16,20 @@ class TransaksiPembayaransTable
     {
         return $table
             ->columns([
-                TextColumn::make('transaksi.invoie')
+                TextColumn::make('transaksi.invoice')
                     ->label('Nomer Invoice'),
-                TextColumn::make('user.nama')
+                TextColumn::make('user.name')
                     ->label('Kasir'),
                 TextColumn::make('customer.nama')
                     ->label('Nama Pelanggan'),
                 TextColumn::make('jumlah_bayar')
                     ->label('Nominal')
                     ->numeric(),
-                TextColumn::make('metode_bayar')
-                    ->label('Metode Pembayaran'),
-                IconColumn::make('Status Lunas')
+                TextColumn::make('metode')
+                    ->label('Metode'),
+                IconColumn::make('is_lunas')
+                    ->label('Status')
+                    ->boolean()
             ])
             ->filters([
                 //
